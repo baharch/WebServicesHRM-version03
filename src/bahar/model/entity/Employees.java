@@ -2,6 +2,10 @@ package bahar.model.entity;
 
 public class Employees {
     private long employeeID;
+
+
+
+    private long seq_employee;
     private String name;
     private String family;
     private String email;
@@ -18,12 +22,13 @@ public class Employees {
         this.nationalCode = nationalCode;
     }
 
+
     public long getEmployeeID() {
         return employeeID;
     }
 
-    public Employees setEmployeeID(long employeeID) {
-        this.employeeID = employeeID;
+    public Employees setEmployeeID(long seq_employee) {
+        this.employeeID = seq_employee;
         return this;
     }
 

@@ -27,12 +27,12 @@ public class EmployeesService {
 
     public void removeAll() throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-            employeesDAO.delete();
+            employeesDAO.deleteAll();
         }
     }
     public void removeByID(long employeeID) throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-            employeesDAO.deleteByID(employeeID);
+            employeesDAO.deleteEmployee(employeeID);
         }
     }
 
@@ -49,23 +49,13 @@ public class EmployeesService {
         }
     }
 
-    public String findByName(String name) throws Exception {
+    public String findByNameFamily(String name,String family) throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-           return employeesDAO.selectByName(name);
+           return employeesDAO.selectByNameFamily(name,family);
         }
     }
 
-    public String findByFamily(String family) throws Exception {
-        try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-           return employeesDAO.selectByFamily(family);
-        }
-    }
 
-    public String findByNationalCode(long nationalCode) throws Exception {
-        try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-           return employeesDAO.selectByNationalCode(nationalCode);
-        }
-    }
 
 
 }

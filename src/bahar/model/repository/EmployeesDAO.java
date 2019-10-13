@@ -16,24 +16,28 @@ public class EmployeesDAO implements AutoCloseable {
     public EmployeesDAO() throws Exception {
         connection = JDBC.getConnection();
     }
+
     @Override
-    public void close() throws Exception {
+    public void close() throws Exception
+    {
         connection.commit();
         preparedStatement.close();
         connection.close();
 
     }
+
     public void insert(Employees employee)throws Exception
     {
-        preparedStatement = connection.prepareStatement("INSERT INTO employee (employeeID,name,family,email,nationalCode) VALUES (?,?,?,?,?)");
-        preparedStatement.setLong(1,employee.getEmployeeID());
-        preparedStatement.setString(2,employee.getName());
-        preparedStatement.setString(3,employee.getFamily());
-        preparedStatement.setString(4,employee.getEmail());
-        preparedStatement.setLong(5,employee.getNationalCode());
+        preparedStatement = connection.prepareStatement("INSERT INTO employee (employeeID,name,family,email,nationalCode) VALUES (seq_employee.nextval,?,?,?,?)");
+        //preparedStatement.setLong(1,);
+        preparedStatement.setString(1,employee.getName());
+        preparedStatement.setString(2,employee.getFamily());
+        preparedStatement.setString(3,employee.getEmail());
+        preparedStatement.setLong(4,employee.getNationalCode());
         preparedStatement.executeUpdate();
     }
-    public void delete()throws Exception
+
+    public void deleteAll()throws Exception
     {   preparedStatement = connection.prepareStatement("DELETE FROM employee ");
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("DELETE FROM address");
@@ -45,12 +49,13 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement = connection.prepareStatement("DELETE FROM relative ");
         preparedStatement.executeUpdate();
     }
-    public void deleteByID(long employeeID)throws Exception
+
+    public void deleteEmployee(long employeeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("DELETE FROM employees WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM employee WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM addresse WHERE employeeID=?");
+        /*preparedStatement = connection.prepareStatement("DELETE FROM address WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("DELETE FROM education WHERE employeeID=?");
@@ -61,12 +66,12 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("DELETE FROM relative WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
-        preparedStatement.executeUpdate();
-
+        preparedStatement.executeUpdate();*/
     }
+
     public void update(Employees employee)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE employee SET (name=?,family=?,email=?,nationalCode=?) WHERE employeeID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE employee SET name=?,family=?,email=?,nationalCode=? WHERE employeeID=?");
         preparedStatement.setString(1,employee.getName());
         preparedStatement.setString(2,employee.getFamily());
         preparedStatement.setString(3,employee.getEmail());
@@ -75,6 +80,7 @@ public class EmployeesDAO implements AutoCloseable {
 
         preparedStatement.executeUpdate();
     }
+
     public String select()throws Exception
     {
         preparedStatement = connection.prepareStatement("SELECT * FROM employee");
@@ -101,24 +107,13 @@ public class EmployeesDAO implements AutoCloseable {
         }
         return jsonArray.toJSONString();
     }
-    public String selectByNationalCode(long nationalCode)throws Exception
-    {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE nationalCode=?");
-        preparedStatement.setLong(1,nationalCode);
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        JSONArray jsonArray=new JSONArray();
-        while(resultSet.next())
-        {
-           jsonArray.add(setJSONObject(resultSet));
-        }
-        return jsonArray.toJSONString();
-    }
 
-    public String selectByName(String employeeName)throws Exception
+    public String selectByNameFamily(String employeeName,String employeeFamily)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? ");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? or family=? order by employeeID ASC");
         preparedStatement.setString(1,employeeName);
+        preparedStatement.setString(2,employeeFamily);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -130,22 +125,9 @@ public class EmployeesDAO implements AutoCloseable {
         return jsonArray.toJSONString();
     }
 
-    public String selectByFamily(String employeeFamily)throws Exception
+
+    private JSONObject setJSONObject(ResultSet resultSet) throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE family=?");
-        preparedStatement.setString(1,employeeFamily);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        JSONArray jsonArray=new JSONArray();
-        while(resultSet.next())
-        {
-            jsonArray.add(setJSONObject(resultSet));
-
-        }
-        return jsonArray.toJSONString();
-    }
-
-    private JSONObject setJSONObject(ResultSet resultSet) throws Exception {
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("employeeID",resultSet.getString("employeeID"));
         jsonObject.put("name",resultSet.getString("name"));

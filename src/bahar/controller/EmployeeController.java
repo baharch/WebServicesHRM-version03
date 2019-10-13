@@ -46,8 +46,8 @@ public class EmployeeController {
 
     @GET
     @Produces("text/plain")
-    @Path("/delete")
-    public String removeByID(@Context HttpServletRequest request)
+    @Path("/removeEmployee")
+    public String removeEmployee(@Context HttpServletRequest request)
     {
         try {
             Employees employee = new Employees();
@@ -88,6 +88,23 @@ public class EmployeeController {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/findByNameFamily")
+    public String findByNameFamily(@Context HttpServletRequest request)
+    {
+        try {
+            Employees employee = new Employees();
+            employee.setName(request.getParameter("name"));
+            employee.setFamily(request.getParameter("family"));
+            return EmployeesService.getInstance().findByNameFamily(employee.getName(),employee.getFamily());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
     private void setEmployeefieldes(Employees employee,@Context HttpServletRequest request)
     {
         employee.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
