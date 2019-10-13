@@ -26,7 +26,7 @@ public class RelativesDAO implements AutoCloseable {
 
     public void insert(Relatives relative)throws Exception
 {
-    preparedStatement = connection.prepareStatement("INSERT INTO relatives (employeeID,relativeSEQ.nextval,name,family,relation) VALUES ( ?,?,?,?,?)");
+    preparedStatement = connection.prepareStatement("INSERT INTO relative (employeeID,relativeSEQ.nextval,name,family,relation) VALUES ( ?,?,?,?,?)");
     preparedStatement.setLong(1,relative.getEmployeeID());
     preparedStatement.setLong(2,relative.getRelativeID());
     preparedStatement.setString(3,relative.getName());
@@ -37,7 +37,7 @@ public class RelativesDAO implements AutoCloseable {
 }
     public void update(Relatives relative)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE relatives SET employeeID=?,name=?,family=?,relation=?) WHERE relativeID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE relative SET employeeID=?,name=?,family=?,relation=?) WHERE relativeID=?)");
         preparedStatement.setLong(1,relative.getEmployeeID());
         preparedStatement.setString(2,relative.getName());
         preparedStatement.setString(3,relative.getFamily());
@@ -48,20 +48,20 @@ public class RelativesDAO implements AutoCloseable {
 
     public void delete(long relativeID )throws Exception
     {
-        preparedStatement = connection.prepareStatement("DELETE FROM relatives WHERE relativeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM relative WHERE relativeID=?");
         preparedStatement.setLong(1,relativeID);
         preparedStatement.executeUpdate();
     }
 
     public void deleteByEmployeeID(long employeeID )throws Exception
     {
-        preparedStatement = connection.prepareStatement("DELETE FROM relatives WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM relative WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
     }
     public String select()throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM relatives ORDER BY employeeID");
+        preparedStatement = connection.prepareStatement("SELECT * FROM relative ORDER BY employeeID");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -75,7 +75,7 @@ public class RelativesDAO implements AutoCloseable {
 
     public String selectByID(long employeeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM relatives WHERE employeeID=? ");
+        preparedStatement = connection.prepareStatement("SELECT * FROM relative WHERE employeeID=? ");
         preparedStatement.setLong(1,employeeID);
         ResultSet resultSet = preparedStatement.executeQuery();
         JSONArray jsonArray=new JSONArray();
@@ -87,7 +87,7 @@ public class RelativesDAO implements AutoCloseable {
     }
     public String selectByRelativeID(long relativeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT relatives.employeeID,employee.name,employee.family FROM relatives,employee WHERE relatives.relativeID=? ");
+        preparedStatement = connection.prepareStatement("SELECT relative.employeeID,employee.name,employee.family FROM relative,employee WHERE relative.relativeID=? ");
         preparedStatement.setLong(1,relativeID);
 
         ResultSet resultSet = preparedStatement.executeQuery();
