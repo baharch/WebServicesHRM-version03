@@ -25,7 +25,7 @@ public class ExperiencesDAO implements AutoCloseable {
     }
     public void insert(Experiences experience)throws Exception
     {
-        preparedStatement = connection.prepareStatement("INSERT INTO experiences (employeeID,experienceID,experienceType, institute,title,exDate) VALUES ( ?,?,?,?,?,?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO experience (employeeID,experienceID,experienceType, institute,title,exDate) VALUES ( ?,?,?,?,?,?)");
         preparedStatement.setLong(1,experience.getEmployeeID());
         preparedStatement.setLong(2,experience.getExperienceID());
         preparedStatement.setInt(3,experience.getExperienceType());
@@ -37,7 +37,7 @@ public class ExperiencesDAO implements AutoCloseable {
 
     public void update(Experiences experience)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE experiences SET employeeID=?,experienceID=?,experienceType=?,title=?,institute=?,exDate=? WHERE experienceID=?");
+        preparedStatement = connection.prepareStatement("UPDATE experience SET employeeID=?,experienceID=?,experienceType=?,title=?,institute=?,exDate=? WHERE experienceID=?");
         preparedStatement.setLong(1,experience.getEmployeeID());
         preparedStatement.setLong(2,experience.getExperienceID());
         preparedStatement.setInt(3,experience.getExperienceType());
@@ -49,20 +49,20 @@ public class ExperiencesDAO implements AutoCloseable {
     }
     public void delete(long experienceID )throws Exception
     {
-        preparedStatement = connection.prepareStatement("DELETE FROM experiences WHERE experienceID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM experience WHERE experienceID=?");
         preparedStatement.setLong(1,experienceID);
         preparedStatement.executeUpdate();
     }
 
     public void deleteByEmployeeID(long employeeID )throws Exception
     {
-        preparedStatement = connection.prepareStatement("DELETE FROM experiences WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM experience WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
     }
     public String select()throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT experiences.*,experienceType.exTypeID FROM experiences INNER JOIN experienceType experiences.experienceID=experienceType.experienceID ORDER BY employeeID");
+        preparedStatement = connection.prepareStatement("SELECT experience.*,experienceType.exTypeID FROM experience INNER JOIN experienceType experience.experienceID=experienceType.experienceID ORDER BY employeeID");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -75,7 +75,7 @@ public class ExperiencesDAO implements AutoCloseable {
 
     public String selectByEmployeeID(long employeeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT experiences.*,experienceType.experienceID FROM experiences INNER JOIN experienceType experiences.experienceID=experienceType.experienceID WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("SELECT experience.*,experienceType.experienceID FROM experience INNER JOIN experienceType experience.experienceID=experienceType.experienceID WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         ResultSet resultSet = preparedStatement.executeQuery();
 

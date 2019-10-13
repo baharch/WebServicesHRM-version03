@@ -25,7 +25,7 @@ public class EmployeesDAO implements AutoCloseable {
     }
     public void insert(Employees employee)throws Exception
     {
-        preparedStatement = connection.prepareStatement("INSERT INTO employees (employeeID,name,family,email,nationalCode) VALUES (?,?,?,?,?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO employee (employeeID,name,family,email,nationalCode) VALUES (?,?,?,?,?)");
         preparedStatement.setLong(1,employee.getEmployeeID());
         preparedStatement.setString(2,employee.getName());
         preparedStatement.setString(3,employee.getFamily());
@@ -34,15 +34,15 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement.executeUpdate();
     }
     public void delete()throws Exception
-    {   preparedStatement = connection.prepareStatement("DELETE FROM employees ");
+    {   preparedStatement = connection.prepareStatement("DELETE FROM employee ");
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM addresses");
+        preparedStatement = connection.prepareStatement("DELETE FROM address");
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM educations");
+        preparedStatement = connection.prepareStatement("DELETE FROM education");
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM experiences");
+        preparedStatement = connection.prepareStatement("DELETE FROM experience");
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM relatives ");
+        preparedStatement = connection.prepareStatement("DELETE FROM relative ");
         preparedStatement.executeUpdate();
     }
     public void deleteByID(long employeeID)throws Exception
@@ -50,23 +50,23 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement = connection.prepareStatement("DELETE FROM employees WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM addresses WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM addresse WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM educations WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM education WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM experiences WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM experience WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        preparedStatement = connection.prepareStatement("DELETE FROM relatives WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM relative WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
 
     }
     public void update(Employees employee)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE employees SET (name=?,family=?,email=?,nationalCode=?) WHERE employeeID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE employee SET (name=?,family=?,email=?,nationalCode=?) WHERE employeeID=?)");
         preparedStatement.setString(1,employee.getName());
         preparedStatement.setString(2,employee.getFamily());
         preparedStatement.setString(3,employee.getEmail());
@@ -77,7 +77,7 @@ public class EmployeesDAO implements AutoCloseable {
     }
     public String select()throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employees");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -90,7 +90,7 @@ public class EmployeesDAO implements AutoCloseable {
 
     public String selectByID(long employeeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -103,7 +103,7 @@ public class EmployeesDAO implements AutoCloseable {
     }
     public String selectByNationalCode(long nationalCode)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE nationalCode=?");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE nationalCode=?");
         preparedStatement.setLong(1,nationalCode);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -117,7 +117,7 @@ public class EmployeesDAO implements AutoCloseable {
 
     public String selectByName(String employeeName)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE name=? ");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? ");
         preparedStatement.setString(1,employeeName);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -132,7 +132,7 @@ public class EmployeesDAO implements AutoCloseable {
 
     public String selectByFamily(String employeeFamily)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employees WHERE family=?");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE family=?");
         preparedStatement.setString(1,employeeFamily);
         ResultSet resultSet = preparedStatement.executeQuery();
 
