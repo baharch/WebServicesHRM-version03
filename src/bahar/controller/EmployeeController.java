@@ -46,8 +46,8 @@ public class EmployeeController {
 
     @GET
     @Produces("text/plain")
-    @Path("/removeEmployee")
-    public String removeEmployee(@Context HttpServletRequest request)
+    @Path("/remove")
+    public String remove(@Context HttpServletRequest request)
     {
         try {
             Employees employee = new Employees();

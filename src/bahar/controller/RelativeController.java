@@ -61,8 +61,8 @@ public class RelativeController {
     }
     @GET
     @Produces("text/plain")
-    @Path("/removeByEmployeeID")
-    public String removeByEmployeeID(@Context HttpServletRequest request)
+    @Path("/removeAll")
+    public String removeAll(@Context HttpServletRequest request)
     {
         try {
             Relatives relative = new Relatives();
@@ -76,7 +76,7 @@ public class RelativeController {
     }
 
 
-    @GET
+  /*  @GET
     @Produces("text/plain")
     @Path("/findAll")
     public String findAll(@Context HttpServletRequest request)
@@ -87,12 +87,12 @@ public class RelativeController {
         {
             return ExceptionWrapper.getMessage(e);
         }
-    }
+    }*/
 
     @GET
     @Produces("text/plain")
-    @Path("/findByEmployeeID")
-    public String findByEmployeeID(@Context HttpServletRequest request)
+    @Path("/findAll")
+    public String findAll(@Context HttpServletRequest request)
     {
         try {
             Relatives relative = new Relatives();
@@ -103,6 +103,7 @@ public class RelativeController {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
     private void setRelativeFields(Relatives relative,@Context HttpServletRequest request)
     {
         relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
