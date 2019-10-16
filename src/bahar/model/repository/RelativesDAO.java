@@ -33,11 +33,10 @@ public class RelativesDAO implements AutoCloseable {
     preparedStatement.setString(3,relative.getFamily());
     preparedStatement.setString(4,relative.getRelation());
     preparedStatement.executeUpdate();
-
 }
     public void update(Relatives relative)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE relative SET name=?,family=?,relation=?) WHERE relativeID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE relative SET (name=?,family=?,relation=?) WHERE relativeID=?");
 
         preparedStatement.setString(1,relative.getName());
         preparedStatement.setString(2,relative.getFamily());

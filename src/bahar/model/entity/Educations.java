@@ -4,17 +4,17 @@ public class Educations extends Employees {
     private long employeeID;
     private long educationID;
     private String field;
-    private int degreeID;
+    private String degree;
     private String university;
 
     public Educations() {
     }
 
-    public Educations(long employeeID, long educationID, String field, int degreeID, String university) {
+    public Educations(long employeeID, long educationID, String field, String degree, String university) {
         this.employeeID = employeeID;
         this.educationID = educationID;
         this.field = field;
-        this.degreeID = degreeID;
+        this.degree = degree;
         this.university = university;
     }
 
@@ -45,12 +45,12 @@ public class Educations extends Employees {
         return this;
     }
 
-    public int getDegreeID() {
-        return degreeID;
+    public String getDegree() {
+        return degree;
     }
 
-    public Educations setDegreeID(int degreeID) {
-        this.degreeID = degreeID;
+    public Educations setDegree(String degree) {
+        this.degree= degree;
         return this;
     }
 

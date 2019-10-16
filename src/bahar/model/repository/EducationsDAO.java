@@ -25,12 +25,11 @@ public class EducationsDAO  implements AutoCloseable {
     }
     public void insert(Educations educations)throws Exception
     {
-        preparedStatement = connection.prepareStatement("INSERT INTO education (employeeID,educationID,field,degreeID,university) VALUES ( ?,?,?,?,?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO education (employeeID,educationID,field,degree,university) VALUES ( ?,seq_education.nextval,?,?,?)");
         preparedStatement.setLong(1,educations.getEmployeeID());
-        preparedStatement.setLong(2,educations.getEducationID());
-        preparedStatement.setInt(3,educations.getDegreeID());
-        preparedStatement.setString(4,educations.getField());
-        preparedStatement.setString(5,educations.getUniversity());
+        preparedStatement.setString(2,educations.getField());
+        preparedStatement.setString(3,educations.getDegree());
+        preparedStatement.setString(4,educations.getUniversity());
         preparedStatement.executeUpdate();
     }
     public void delete(long educationID )throws Exception
@@ -50,7 +49,7 @@ public class EducationsDAO  implements AutoCloseable {
         preparedStatement = connection.prepareStatement("UPDATE education SET employeeID=?,educationID=?,degreeID=?,feild=?,university=?) WHERE educationID=?)");
         preparedStatement.setLong(1,educations.getEmployeeID());
         preparedStatement.setLong(2,educations.getEducationID());
-        preparedStatement.setInt(3,educations.getDegreeID());
+        preparedStatement.setString(3,educations.getDegree());
         preparedStatement.setString(4,educations.getField());
         preparedStatement.setString(5,educations.getUniversity());
         preparedStatement.setLong(6,educations.getEducationID());
