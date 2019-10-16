@@ -61,8 +61,8 @@ public class ExperienceController {
     }
     @GET
     @Produces("text/plain")
-    @Path("/removeByEmployeeID")
-    public String removeByEmployeeID(@Context HttpServletRequest request)
+    @Path("/removeAll")
+    public String removeAll(@Context HttpServletRequest request)
     {
         try {
             Experiences experience = new Experiences();
@@ -76,7 +76,7 @@ public class ExperienceController {
     }
 
 
-    @GET
+   /* @GET
     @Produces("text/plain")
     @Path("/findAll")
     public String findAll(@Context HttpServletRequest request)
@@ -87,12 +87,12 @@ public class ExperienceController {
         {
             return ExceptionWrapper.getMessage(e);
         }
-    }
+    }*/
 
     @GET
     @Produces("text/plain")
-    @Path("/findByEmployeeID")
-    public String findByEmployeeID(@Context HttpServletRequest request)
+    @Path("/findAll")
+    public String findAll(@Context HttpServletRequest request)
     {
         try {
             Experiences experience = new Experiences();

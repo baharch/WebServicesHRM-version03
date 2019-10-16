@@ -79,6 +79,7 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement.setLong(5,employee.getEmployeeID());
 
         preparedStatement.executeUpdate();
+
     }
 
     public String select()throws Exception
@@ -91,7 +92,13 @@ public class EmployeesDAO implements AutoCloseable {
         {
             jsonArray.add(setJSONObject(resultSet));
             }
-        return jsonArray.toJSONString();
+//        JSONObject resultJSON=new JSONObject();
+//        resultJSON.put("employees", jsonArray);
+//        return resultJSON.toJSONString();
+            return jsonResult(jsonArray);
+
+
+       // return jsonArray.toJSONString();
     }
 
     public String selectByID(long employeeID)throws Exception
@@ -105,7 +112,8 @@ public class EmployeesDAO implements AutoCloseable {
         {
             jsonArray.add(setJSONObject(resultSet));
         }
-        return jsonArray.toJSONString();
+        //return jsonArray.toJSONString();
+        return jsonResult(jsonArray);
     }
 
 
@@ -120,21 +128,29 @@ public class EmployeesDAO implements AutoCloseable {
         while(resultSet.next())
         {
             jsonArray.add(setJSONObject(resultSet));
-
         }
-        return jsonArray.toJSONString();
+        //return jsonArray.toJSONString();
+        return jsonResult(jsonArray);
     }
 
 
     private JSONObject setJSONObject(ResultSet resultSet) throws Exception
     {
         JSONObject jsonObject=new JSONObject();
+
         jsonObject.put("employeeID",resultSet.getString("employeeID"));
         jsonObject.put("name",resultSet.getString("name"));
         jsonObject.put("family",resultSet.getString("family"));
         jsonObject.put("email",resultSet.getString("email"));
         jsonObject.put("nationalCode",resultSet.getString("nationalCode"));
+
         return jsonObject;
+    }
+
+    private String jsonResult(JSONArray jsonArray){
+        JSONObject resultJSON=new JSONObject();
+        resultJSON.put("employees", jsonArray);
+        return resultJSON.toJSONString();
     }
 
 }

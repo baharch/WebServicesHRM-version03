@@ -24,31 +24,35 @@ public class EmployeesService {
             employeesDAO.update(employee);
         }
     }
-
+//clear All tables
     public void removeAll() throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
             employeesDAO.deleteAll();
         }
     }
+
+    //delete all the records in all tables related to the employeeID
     public void removeByID(long employeeID) throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
             employeesDAO.deleteEmployee(employeeID);
         }
     }
 
-
+//list of all the record of employee table
     public String findAll() throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
             return employeesDAO.select();
         }
     }
 
+//the information of the employee from employee table find by employeeID
     public String findByID(long employeeID) throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
             return employeesDAO.selectByID(employeeID);
         }
     }
 
+    //list of employees from employee table find by name of family
     public String findByNameFamily(String name,String family) throws Exception {
         try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
            return employeesDAO.selectByNameFamily(name,family);

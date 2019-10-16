@@ -2,9 +2,6 @@ package bahar.model.entity;
 
 public class Employees {
     private long employeeID;
-
-
-
     private long seq_employee;
     private String name;
     private String family;
