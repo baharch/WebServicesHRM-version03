@@ -23,27 +23,39 @@ public class AddressesService {
             addressesDAO.update(address);
         }
     }
-    public void remove(long addressID) throws Exception {
+    public void removeAll() throws Exception {
         try (AddressesDAO addressesDAO = new AddressesDAO()) {
-            addressesDAO.delete(addressID);
+            addressesDAO.deleteAll();
         }
     }
 
-    public void removeByEmployeeID(long employeeID) throws Exception {
+    public void removeAddresses(long employeeID) throws Exception {
         try (AddressesDAO addressesDAO = new AddressesDAO()) {
-            addressesDAO.deleteByEmployeeID(employeeID);
+            addressesDAO.deleteAddresses(employeeID);
+        }
+    }
+
+    public void removeAddress(long addressID) throws Exception {
+        try (AddressesDAO addressesDAO = new AddressesDAO()) {
+            addressesDAO.deleteAddress(addressID);
         }
     }
 
     public String findAll() throws Exception {
         try (AddressesDAO addressesDAO = new AddressesDAO()) {
-           return addressesDAO.select();
+           return addressesDAO.selectAll();
         }
     }
 
-    public String findByEmployeeID(long employeeID) throws Exception {
+    public String findAddresses(long employeeID) throws Exception {
         try (AddressesDAO addressesDAO = new AddressesDAO()) {
-           return addressesDAO.selectByEmployeeID(employeeID);
+           return addressesDAO.selectAddresses(employeeID);
+        }
+    }
+
+    public String findAddress(long addressID) throws Exception {
+        try (AddressesDAO addressesDAO = new AddressesDAO()) {
+            return addressesDAO.selectAddress(addressID);
         }
     }
 }

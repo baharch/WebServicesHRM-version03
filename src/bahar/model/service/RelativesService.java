@@ -24,33 +24,40 @@ public class RelativesService {
         }
     }
 
-    public void remove(long relativeID) throws Exception {
+    public void removeAll() throws Exception {
         try  (RelativesDAO relativesDAO = new RelativesDAO()) {
-            relativesDAO.delete(relativeID);
+            relativesDAO.deleteAll();
         }
     }
 
-    public void removeByEmployeeID(long employeeID) throws Exception {
+    public void removeRelatives(long employeeID) throws Exception {
         try  (RelativesDAO relativesDAO = new RelativesDAO()) {
-            relativesDAO.delete(employeeID);
+            relativesDAO.deleteRelatives(employeeID);
         }
     }
+
+    public void removeRelative(long relativeID) throws Exception {
+        try  (RelativesDAO relativesDAO = new RelativesDAO()) {
+            relativesDAO.deleteRelative(relativeID);
+        }
+    }
+
 
     public String findAll() throws Exception {
         try (RelativesDAO relativesDAO = new RelativesDAO()) {
-           return relativesDAO.select();
+           return relativesDAO.selectAll();
         }
     }
 
-    public String findByEmployeeID(long employeeID) throws Exception {
+    public String findRelatives(long employeeID) throws Exception {
         try (RelativesDAO relativesDAO = new RelativesDAO()) {
-           return relativesDAO.selectByID(employeeID);
+           return relativesDAO.selectRelatives(employeeID);
         }
     }
 
-    public String findByRelativeID(long relativeID) throws Exception {
+    public String findRelative(long relativeID) throws Exception {
         try (RelativesDAO relativesDAO = new RelativesDAO()) {
-           return relativesDAO.selectByRelativeID(relativeID);
+           return relativesDAO.selectRelative(relativeID);
         }
     }
 

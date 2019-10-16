@@ -25,9 +25,9 @@ public class AddressesDAO implements AutoCloseable {
     }
     public void insert(Addresses address)throws Exception
     {
-        preparedStatement = connection.prepareStatement("insert into address (employeeID,addressID,city,street,houseNo,postalCode) values ( ?,?,? ,?,?,?)");
+        preparedStatement = connection.prepareStatement("insert into address (employeeID,addressID,city,street,houseNo,postalCode) values ( ?,seq_address.nextval,? ,?,?,?)");
         preparedStatement.setLong(1,address.getEmployeeID());
-        preparedStatement.setLong(2,address.getAddressID());
+        //preparedStatement.setLong(2,address.getAddressID());
         preparedStatement.setString(3,address.getCity());
         preparedStatement.setString(4,address.getStreet());
         preparedStatement.setInt(5,address.getHouseNo());
@@ -37,31 +37,35 @@ public class AddressesDAO implements AutoCloseable {
 
     public void update(Addresses address)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE address SET city=?,street=?,houseNo=?,postalCode=?, employeeID=?) WHERE employeeID=? and addressID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE address SET city=?,street=?,houseNo=?,postalCode=?) WHERE addressID=?)");
         preparedStatement.setString(1,address.getCity());
         preparedStatement.setString(2,address.getStreet());
         preparedStatement.setInt(3,address.getHouseNo());
         preparedStatement.setInt(4,address.getPostalCode());
-        preparedStatement.setLong(5,address.getEmployeeID());
-        preparedStatement.setLong(6,address.getEmployeeID());
-        preparedStatement.setLong(7,address.getAddressID());
+        preparedStatement.setLong(5,address.getAddressID());
         preparedStatement.executeUpdate();
     }
-    public void delete(long addressID)throws Exception
+    public void deleteAll()throws Exception
     {
-        preparedStatement = connection.prepareStatement("delete from address where addressID=?");
-        preparedStatement.setLong(1,addressID);
+        preparedStatement = connection.prepareStatement("delete from address ");
         preparedStatement.executeUpdate();
     }
-    public void deleteByEmployeeID(long employeeID)throws Exception
+    public void deleteAddresses(long employeeID)throws Exception
     {
         preparedStatement = connection.prepareStatement("delete from address where employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
     }
-    public String select()throws Exception
+    public void deleteAddress(long addressID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("select * from address ORDER BY employeeID");
+        preparedStatement = connection.prepareStatement("delete from address where addressID=?");
+        preparedStatement.setLong(1,addressID);
+        preparedStatement.executeUpdate();
+    }
+
+    public String selectAll()throws Exception
+    {
+        preparedStatement = connection.prepareStatement("select * from address ORDER BY employeeID,addressID ASC");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -69,12 +73,11 @@ public class AddressesDAO implements AutoCloseable {
         {
             jsonArray.add(setJSONObject(resultSet));
         }
-        return jsonArray.toJSONString();
+        return jsonResult(jsonArray);
     }
-
-    public String selectByEmployeeID(long employeeID)throws Exception
+    public String selectAddresses(Long employeeID)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM address WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("select * from address where employeeID=? ORDER BY addressID ASC");
         preparedStatement.setLong(1,employeeID);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -83,7 +86,21 @@ public class AddressesDAO implements AutoCloseable {
         {
             jsonArray.add(setJSONObject(resultSet));
         }
-        return jsonArray.toJSONString();
+        return jsonResult(jsonArray);
+    }
+
+    public String selectAddress(long addressID)throws Exception
+    {
+        preparedStatement = connection.prepareStatement("SELECT * FROM address WHERE addressID=?");
+        preparedStatement.setLong(1,addressID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        JSONArray jsonArray=new JSONArray();
+        while(resultSet.next())
+        {
+            jsonArray.add(setJSONObject(resultSet));
+        }
+        return jsonResult(jsonArray);
     }
 
 
@@ -96,6 +113,12 @@ public class AddressesDAO implements AutoCloseable {
         jsonObject.put("houseNo",resultSet.getString("houseNo"));
         jsonObject.put("postalCode",resultSet.getString("postalCode"));
         return jsonObject;
+    }
+
+    private String jsonResult(JSONArray jsonArray){
+        JSONObject resultJSON=new JSONObject();
+        resultJSON.put("addresses", jsonArray);
+        return resultJSON.toJSONString();
     }
 
 }

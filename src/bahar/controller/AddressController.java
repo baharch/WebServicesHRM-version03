@@ -46,19 +46,37 @@ public class AddressController {
 
     @GET
     @Produces("text/plain")
-    @Path("/remove")
-    public String remove(@Context HttpServletRequest request)
+    @Path("/removeAddress")
+    public String removeAddress(@Context HttpServletRequest request)
     {
         try {
             Addresses address = new Addresses();
             address.setAddressID(Long.parseLong(request.getParameter("addressID")));
-            AddressesService.getInstance().remove(address.getAddressID());
+            address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            AddressesService.getInstance().removeAddress(address.getAddressID());
+            return AddressesService.getInstance().findAddresses(address.getEmployeeID());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/removeAddresses")
+    public String removeAddresses(@Context HttpServletRequest request)
+    {
+        try {
+            Addresses address = new Addresses();
+            address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            AddressesService.getInstance().removeAddresses(address.getEmployeeID());
             return AddressesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
     @GET
     @Produces("text/plain")
     @Path("/removeAll")
@@ -66,28 +84,14 @@ public class AddressController {
     {
         try {
             Addresses address = new Addresses();
-            address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            AddressesService.getInstance().removeByEmployeeID(address.getEmployeeID());
+           // address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            AddressesService.getInstance().removeAll();
             return AddressesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
         }
     }
-
-
-   /* @GET
-    @Produces("text/plain")
-    @Path("/findAll")
-    public String findAll(@Context HttpServletRequest request)
-    {
-        try {
-            return AddressesService.getInstance().findAll();
-        }catch (Exception e)
-        {
-            return ExceptionWrapper.getMessage(e);
-        }
-    }*/
 
     @GET
     @Produces("text/plain")
@@ -95,14 +99,43 @@ public class AddressController {
     public String findAll(@Context HttpServletRequest request)
     {
         try {
-            Addresses address = new Addresses();
-            address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            return AddressesService.getInstance().findByEmployeeID(address.getEmployeeID());
+            return AddressesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/findAddresses")
+    public String findAddresses(@Context HttpServletRequest request)
+    {
+        try {
+            Addresses address = new Addresses();
+            address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            return AddressesService.getInstance().findAddresses(address.getEmployeeID());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/findAddress")
+    public String findAddress(@Context HttpServletRequest request)
+    {
+        try {
+            Addresses address = new Addresses();
+            address.setAddressID(Long.parseLong(request.getParameter("addressID")));
+            return AddressesService.getInstance().findAddress(address.getAddressID());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
     private void setAddressFieldes(Addresses address,@Context HttpServletRequest request)
     {
         address.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));

@@ -21,7 +21,7 @@ public class RelativeController {
                 Relatives relative = new Relatives();
                 setRelativeFields(relative, request);
                 RelativesService.getInstance().save(relative);
-                return RelativesService.getInstance().findAll();
+                return RelativesService.getInstance().findRelatives(relative.getEmployeeID());
             }catch (Exception e)
             {
                 return ExceptionWrapper.getMessage(e);
@@ -37,7 +37,7 @@ public class RelativeController {
             Relatives relative = new Relatives();
             setRelativeFields(relative, request);
             RelativesService.getInstance().edit(relative);
-            return RelativesService.getInstance().findAll();
+            return RelativesService.getInstance().findRelatives(relative.getEmployeeID());
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
@@ -46,28 +46,45 @@ public class RelativeController {
 
     @GET
     @Produces("text/plain")
-    @Path("/remove")
-    public String remove(@Context HttpServletRequest request)
+    @Path("/removeRelative")
+    public String removeRelative(@Context HttpServletRequest request)
     {
         try {
             Relatives relative = new Relatives();
             relative.setRelativeID(Long.parseLong(request.getParameter("relativeID")));
-            RelativesService.getInstance().remove(relative.getRelativeID());
+            relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            RelativesService.getInstance().removeRelative(relative.getRelativeID());
+            return RelativesService.getInstance().findRelatives(relative.getEmployeeID());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/removeRelatives")
+    public String removeRelatives(@Context HttpServletRequest request)
+    {
+        try {
+            Relatives relative = new Relatives();
+            relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            RelativesService.getInstance().removeRelatives(relative.getEmployeeID());
             return RelativesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
     @GET
     @Produces("text/plain")
     @Path("/removeAll")
     public String removeAll(@Context HttpServletRequest request)
     {
         try {
-            Relatives relative = new Relatives();
-            relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            RelativesService.getInstance().removeByEmployeeID(relative.getEmployeeID());
+            //Relatives relative = new Relatives();
+            RelativesService.getInstance().removeAll();
             return RelativesService.getInstance().findAll();
         }catch (Exception e)
         {
@@ -76,18 +93,6 @@ public class RelativeController {
     }
 
 
-  /*  @GET
-    @Produces("text/plain")
-    @Path("/findAll")
-    public String findAll(@Context HttpServletRequest request)
-    {
-        try {
-            return RelativesService.getInstance().findAll();
-        }catch (Exception e)
-        {
-            return ExceptionWrapper.getMessage(e);
-        }
-    }*/
 
     @GET
     @Produces("text/plain")
@@ -96,8 +101,38 @@ public class RelativeController {
     {
         try {
             Relatives relative = new Relatives();
+            //relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            return RelativesService.getInstance().findAll();
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/findRelative")
+    public String findRelative(@Context HttpServletRequest request)
+    {
+        try {
+            Relatives relative = new Relatives();
+            relative.setRelativeID(Long.parseLong(request.getParameter("relativeID")));
+            return RelativesService.getInstance().findRelative(relative.getRelativeID());
+        }catch (Exception e)
+        {
+            return ExceptionWrapper.getMessage(e);
+        }
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/findRelatives")
+    public String findRelatives(@Context HttpServletRequest request)
+    {
+        try {
+            Relatives relative = new Relatives();
             relative.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            return RelativesService.getInstance().findByEmployeeID(relative.getEmployeeID());
+            return RelativesService.getInstance().findRelatives(relative.getEmployeeID());
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);

@@ -84,7 +84,7 @@ public class EmployeesDAO implements AutoCloseable {
 
     public String select()throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee order by employeeID asc ");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
@@ -119,9 +119,10 @@ public class EmployeesDAO implements AutoCloseable {
 
     public String selectByNameFamily(String employeeName,String employeeFamily)throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? or family=? order by employeeID ASC");
+        //preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? or family=? order by employeeID ASC");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? order by employeeID ASC");
         preparedStatement.setString(1,employeeName);
-        preparedStatement.setString(2,employeeFamily);
+       // preparedStatement.setString(2,employeeFamily);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
