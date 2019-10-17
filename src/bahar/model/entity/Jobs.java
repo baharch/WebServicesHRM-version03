@@ -20,31 +20,35 @@ public class Jobs {
         return jobID;
     }
 
-    public void setJobID(long jobID) {
+    public Jobs setJobID(long jobID) {
         this.jobID = jobID;
+        return  this;
     }
 
     public long getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(long employeeID) {
+    public Jobs setEmployeeID(long employeeID) {
         this.employeeID = employeeID;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Jobs setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Jobs setDescription(String description) {
         this.description = description;
+        return this;
     }
 }

@@ -24,26 +24,37 @@ public class ExperiencesService {
         }
     }
 
-     public void remove(long experienceID) throws Exception {
+    public void removeAll() throws Exception {
         try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
-            experiencesDAO.delete(experienceID);
+            experiencesDAO.deleteAll();
         }
     }
-    public void removeByEmployeeID(long employeeID) throws Exception {
+
+     public void removeExperience(long experienceID) throws Exception {
         try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
-            experiencesDAO.deleteByEmployeeID(employeeID);
+            experiencesDAO.deleteExperience(experienceID);
+        }
+    }
+    public void removeExperiences(long employeeID) throws Exception {
+        try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
+            experiencesDAO.deleteExperiences(employeeID);
         }
     }
 
     public String findAll() throws Exception {
         try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
-           return experiencesDAO.select();
+           return experiencesDAO.selectAll();
         }
     }
 
-    public String findByEmployeeID(long employeeID) throws Exception {
+    public String findExperience(long experienceID) throws Exception {
         try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
-           return experiencesDAO.selectByEmployeeID(employeeID);
+           return experiencesDAO.selectExperience(experienceID);
+        }
+    }
+    public String findExperiences(long employeeID) throws Exception {
+        try (ExperiencesDAO experiencesDAO = new ExperiencesDAO()) {
+            return experiencesDAO.selectExperiences(employeeID);
         }
     }
 }

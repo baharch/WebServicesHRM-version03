@@ -32,7 +32,7 @@ public class JobDAO implements AutoCloseable {
         preparedStatement.executeUpdate();
     }
 
-    public void Update(Jobs job)throws Exception
+    public void update(Jobs job)throws Exception
     {
         preparedStatement = connection.prepareStatement("UPDATE job SET (title=?,description=?) WHERE jobID=?");
         preparedStatement.setString(1,job.getTitle());
@@ -41,6 +41,13 @@ public class JobDAO implements AutoCloseable {
     }
 
     public void jobAllocate(Jobs job)throws Exception
+    {
+        preparedStatement = connection.prepareStatement("UPDATE job SET (employeeID=?) WHERE jobID=?");
+        preparedStatement.setLong(1,job.getEmployeeID());
+        preparedStatement.setLong(2,job.getJobID());
+        preparedStatement.executeUpdate();
+    }
+    public void jobFree(Jobs job)throws Exception
     {
         preparedStatement = connection.prepareStatement("UPDATE job SET (employeeID=?) WHERE jobID=?");
         preparedStatement.setLong(1,job.getEmployeeID());

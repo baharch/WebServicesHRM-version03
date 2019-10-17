@@ -107,7 +107,7 @@ public class EducationController {
     {
         education.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
         education.setEducationID(Long.parseLong(request.getParameter("educationID")));
-        education.setDegreeID(Integer.parseInt(request.getParameter("degreeID")));
+      //  education.setDegreeID(Integer.parseInt(request.getParameter("degreeID")));
         education.setField(request.getParameter("field"));
         education.setUniversity(request.getParameter("university"));
 

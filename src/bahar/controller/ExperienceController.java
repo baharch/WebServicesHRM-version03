@@ -52,7 +52,7 @@ public class ExperienceController {
         try {
             Experiences experience = new Experiences();
             experience.setExperienceID(Long.parseLong(request.getParameter("experienceID")));
-            ExperiencesService.getInstance().remove(experience.getExperienceID());
+           // ExperiencesService.getInstance().remove(experience.getExperienceID());
             return ExperiencesService.getInstance().findAll();
         }catch (Exception e)
         {
@@ -67,7 +67,7 @@ public class ExperienceController {
         try {
             Experiences experience = new Experiences();
             experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            ExperiencesService.getInstance().removeByEmployeeID(experience.getEmployeeID());
+          //  ExperiencesService.getInstance().removeByEmployeeID(experience.getEmployeeID());
             return ExperiencesService.getInstance().findAll();
         }catch (Exception e)
         {
@@ -96,8 +96,8 @@ public class ExperienceController {
     {
         try {
             Experiences experience = new Experiences();
-            experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
-            return ExperiencesService.getInstance().findByEmployeeID(experience.getEmployeeID());
+            //experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
+            return ExperiencesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
@@ -107,7 +107,7 @@ public class ExperienceController {
     {
         experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
         experience.setExperienceID(Long.parseLong(request.getParameter("experienceID")));
-        experience.setExperienceType(Integer.parseInt(request.getParameter("experienceType")));
+       // experience.setExperienceType(Integer.parseInt(request.getParameter("experienceType")));
         experience.setTitle(request.getParameter("title"));
         experience.setInstitute(request.getParameter("institute"));
         experience.setExDate(request.getParameter("exDate"));
