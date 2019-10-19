@@ -55,7 +55,7 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement = connection.prepareStatement("DELETE FROM employee WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
-        /*preparedStatement = connection.prepareStatement("DELETE FROM address WHERE employeeID=?");
+        preparedStatement = connection.prepareStatement("DELETE FROM address WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("DELETE FROM education WHERE employeeID=?");
@@ -66,7 +66,7 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement.executeUpdate();
         preparedStatement = connection.prepareStatement("DELETE FROM relative WHERE employeeID=?");
         preparedStatement.setLong(1,employeeID);
-        preparedStatement.executeUpdate();*/
+        preparedStatement.executeUpdate();
     }
 
     public void update(Employees employee)throws Exception
@@ -77,28 +77,20 @@ public class EmployeesDAO implements AutoCloseable {
         preparedStatement.setString(3,employee.getEmail());
         preparedStatement.setLong(4,employee.getNationalCode());
         preparedStatement.setLong(5,employee.getEmployeeID());
-
         preparedStatement.executeUpdate();
-
     }
 
     public String select()throws Exception
     {
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee order by employeeID asc ");
+        preparedStatement = connection.prepareStatement("SELECT * FROM employee");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         JSONArray jsonArray=new JSONArray();
         while(resultSet.next())
         {
             jsonArray.add(setJSONObject(resultSet));
-            }
-//        JSONObject resultJSON=new JSONObject();
-//        resultJSON.put("employees", jsonArray);
-//        return resultJSON.toJSONString();
-            return jsonResult(jsonArray);
-
-
-       // return jsonArray.toJSONString();
+        }
+        return jsonArray.toJSONString();
     }
 
     public String selectByID(long employeeID)throws Exception
@@ -112,46 +104,18 @@ public class EmployeesDAO implements AutoCloseable {
         {
             jsonArray.add(setJSONObject(resultSet));
         }
-        //return jsonArray.toJSONString();
-        return jsonResult(jsonArray);
+        return jsonArray.toJSONString();
     }
 
 
-    public String selectByNameFamily(String employeeName,String employeeFamily)throws Exception
-    {
-        //preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? or family=? order by employeeID ASC");
-        preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE name=? order by employeeID ASC");
-        preparedStatement.setString(1,employeeName);
-       // preparedStatement.setString(2,employeeFamily);
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        JSONArray jsonArray=new JSONArray();
-        while(resultSet.next())
-        {
-            jsonArray.add(setJSONObject(resultSet));
-        }
-        //return jsonArray.toJSONString();
-        return jsonResult(jsonArray);
-    }
-
-
-    private JSONObject setJSONObject(ResultSet resultSet) throws Exception
-    {
+        private JSONObject setJSONObject(ResultSet resultSet) throws Exception {
         JSONObject jsonObject=new JSONObject();
-
         jsonObject.put("employeeID",resultSet.getString("employeeID"));
         jsonObject.put("name",resultSet.getString("name"));
         jsonObject.put("family",resultSet.getString("family"));
         jsonObject.put("email",resultSet.getString("email"));
         jsonObject.put("nationalCode",resultSet.getString("nationalCode"));
-
         return jsonObject;
     }
-
-    private String jsonResult(JSONArray jsonArray){
-        JSONObject resultJSON=new JSONObject();
-        resultJSON.put("employees", jsonArray);
-        return resultJSON.toJSONString();
-    }
-
 }

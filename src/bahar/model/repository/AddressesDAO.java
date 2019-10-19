@@ -28,16 +28,16 @@ public class AddressesDAO implements AutoCloseable {
         preparedStatement = connection.prepareStatement("insert into address (employeeID,addressID,city,street,houseNo,postalCode) values ( ?,seq_address.nextval,? ,?,?,?)");
         preparedStatement.setLong(1,address.getEmployeeID());
         //preparedStatement.setLong(2,address.getAddressID());
-        preparedStatement.setString(3,address.getCity());
-        preparedStatement.setString(4,address.getStreet());
-        preparedStatement.setInt(5,address.getHouseNo());
-        preparedStatement.setInt(6,address.getPostalCode());
+        preparedStatement.setString(2,address.getCity());
+        preparedStatement.setString(3,address.getStreet());
+        preparedStatement.setInt(4,address.getHouseNo());
+        preparedStatement.setInt(5,address.getPostalCode());
         preparedStatement.executeUpdate();
     }
 
     public void update(Addresses address)throws Exception
     {
-        preparedStatement = connection.prepareStatement("UPDATE address SET city=?,street=?,houseNo=?,postalCode=?) WHERE addressID=?)");
+        preparedStatement = connection.prepareStatement("UPDATE address SET city=?,street=?,houseNo=?,postalCode=?) WHERE addressID=? )");
         preparedStatement.setString(1,address.getCity());
         preparedStatement.setString(2,address.getStreet());
         preparedStatement.setInt(3,address.getHouseNo());

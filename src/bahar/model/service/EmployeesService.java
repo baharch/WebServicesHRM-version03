@@ -52,12 +52,7 @@ public class EmployeesService {
         }
     }
 
-    //list of employees from employee table find by name of family
-    public String findByNameFamily(String name,String family) throws Exception {
-        try  (EmployeesDAO employeesDAO = new EmployeesDAO()){
-           return employeesDAO.selectByNameFamily(name,family);
-        }
-    }
+
 
 
 

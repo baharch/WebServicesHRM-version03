@@ -75,20 +75,6 @@ public class ExperienceController {
         }
     }
 
-
-   /* @GET
-    @Produces("text/plain")
-    @Path("/findAll")
-    public String findAll(@Context HttpServletRequest request)
-    {
-        try {
-            return ExperiencesService.getInstance().findAll();
-        }catch (Exception e)
-        {
-            return ExceptionWrapper.getMessage(e);
-        }
-    }*/
-
     @GET
     @Produces("text/plain")
     @Path("/findAll")
@@ -96,13 +82,13 @@ public class ExperienceController {
     {
         try {
             Experiences experience = new Experiences();
-            //experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));
             return ExperiencesService.getInstance().findAll();
         }catch (Exception e)
         {
             return ExceptionWrapper.getMessage(e);
         }
     }
+
     private void setExperienceFields(Experiences experience,@Context HttpServletRequest request)
     {
         experience.setEmployeeID(Long.parseLong(request.getParameter("employeeID")));

@@ -43,8 +43,9 @@ public class Experiences extends Employees {
         return exType;
     }
 
-    public void setExType(String exType) {
+    public Experiences setExType(String exType) {
         this.exType = exType;
+        return this;
     }
 
     public String getTitle() {
